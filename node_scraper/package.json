@@ -1,0 +1,14 @@
+{
+    "name": "docker_node_scraper",
+    "version": "0.1.0",
+    "description": "Node app scraping a dependencies webpage to extract its content into a json",
+    "author": "Julien Gil <julien_gil@outlook.com>",
+    "main": "scraper.js",
+    "scripts": {
+        "start": "node scraper.js"
+    },
+    "dependencies": {
+        "request": "2.88.0",
+        "cheerio": "1.0.0-rc.3"
+    }
+}
