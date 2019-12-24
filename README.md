@@ -2,7 +2,7 @@
 
 ### Time spent
  * 3h on the shell script and the docker container
- * 3h30 on the node script
+ * 5h on the node script (wasn't able to generate working module nor tests)
  * times are including the seeking of informations
 
 ### Technical/architectural choices
@@ -16,7 +16,8 @@
  * It was a bit harsh to get the js syntax, and I never had to scrap anything before, but looking online for ideas and guidance made me discover the two modules I used, which eventually made the operation pretty easy.
  * The lack of structure (or the great freedom, depends of the point of view) in javascript makes it easy to produce bad code.
  * I wanted to use a class in javascript but I had a hard time because of a scope problem with the request method which couldn't reach the other methods of the class, I eventually read that the classes were not the same as in java, so I gave up this ideacand used a simple object with methods, which is pretty much what I needed.
- * The more problems I had in node were due to the request method : the scope I mentionned above, but also the async side I didn't know how to handle in a simple way.
+ * The more problems I had in node were due to the request method : the scope I mentionned above, finding a way to generate e module, but also the async side I didn't know how to handle in a simple way.
+ * I was unable to generate unit tests, if I understood well, because I wasn't able to generate a module.
  * For the docker container, and since I console.log() the result of the node script, I just print out the docker logs of the container, from the shell script. It pushes me to run a whole new container instead of restart the old one, since the logs aren't erased when the container stops.
 
 ### Next steps

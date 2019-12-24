@@ -8,33 +8,53 @@ const prefix = "IronSource";
 const suffix = "Adapter";
 const versionFormat = "_v";
 
-// variables
+/**
+ * Holds the result as a json object
+ */
 var result = {
   json: {},
 
   /**
    * Adds the element that was just processed to the object containing the expected result
    *
-   * @param {String} elem cheerio object, represents the current item to append to the result
+   * @param {packageElement} elem represents the current item to append to the result
    */
   appendElement: function(elem) {
-    // for this element, extracts the name and the version
-    const packageInfos = elem.text().split(versionFormat);
-    const packageName = this.getPackageName(packageInfos[0]);
-    const version = packageInfos[1].replace(extension, '');
-    // gets the download link from the href attribute with cheerio
-    const dlLink = elem.children().attr('href');
-  
     // checks whether a similar packageName has already been added
-    if(!this.json.hasOwnProperty(packageName)) {
-      this.json[packageName] = {};
+    if (!this.json.hasOwnProperty(elem.name)) {
+      this.json[elem.name] = {};
     }
     // adds version and download link to the result object
-    this.json[packageName][version] = dlLink.startsWith('http') ? dlLink : urlToScrap + dlLink;
+    this.json[elem.name][elem.version] = elem.link;
+  }
+};
+
+/**
+ * Holds values for one package
+ */
+var packageElement = {
+  // values for the package
+  name: "",
+  version: "",
+  link: "",
+
+  /**
+   * Extracts the values of a package for a given cheerio element
+   * @param {Object} cheerioElem the object to parse to obtain the desired values
+   */
+  parse: function(cheerioElem) {
+    // for this element, extracts the name and the version
+    packageInfos = cheerioElem.text().split(versionFormat);
+    this.name = this.getPackageName(packageInfos[0]);
+    this.version = packageInfos[1].replace(extension, '');
+    // gets the download link from the href attribute with cheerio
+    this.link = cheerioElem.children().attr('href');
+    this.link = this.link.startsWith('http') ? this.link : urlToScrap + this.link;
+    return this
   },
 
   /**
-   * "trims" the name of the unity package to have a clean output
+   * "Trims" the name of the unity package to have a clean output
    *
    * @param {String} name The module name, to clean remove suffix and prefix from
    */
@@ -49,6 +69,7 @@ var result = {
   }
 };
 
+
 // use request and cheerio modules to ease the scraping
 request(urlToScrap, function (error, response, body) {
   if (!error) {
@@ -58,7 +79,7 @@ request(urlToScrap, function (error, response, body) {
     $('pre').filter(function(i, item) {
       return $(this).text().endsWith(extension);
     }).each(function(i, item) {
-      result.appendElement($(this));
+      result.appendElement(packageElement.parse($(this)));
     });
     console.log(result.json);
   }
