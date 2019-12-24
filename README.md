@@ -8,7 +8,7 @@
 ### Technical/architectural choices
  * I used the request and cheerio modules in order to ease the access and the scraping of the webpage content.
  * I used constants describing the webpage to scrap in order to easily update them in case we'd like to scrap another type of page/content.
- * A *result* object with methods have been created in order to make the code more readable, and to ease the treatment.
+ * *result* and *packageElement* objects with methods have been created in order to make the code more readable, testable, and to ease the treatment.
  * As you told me you used node just to create short scripts, I did the same here, in a simple form.
  * The whole js is launched inside of a docker container, through a shell script. It allows to run it on any computer, without minding the node version, and also makes it easier to deploy elsewhere.
 

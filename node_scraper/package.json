@@ -5,10 +5,15 @@
     "author": "Julien Gil <julien_gil@outlook.com>",
     "main": "scraper.js",
     "scripts": {
-        "start": "node scraper.js"
+        "start": "node scraper.js",
+        "test": "mocha"
     },
     "dependencies": {
         "request": "2.88.0",
         "cheerio": "1.0.0-rc.3"
+    },
+    "devDependencies": {
+        "chai": "^4.2.0",
+        "mocha": "^6.2.2"
     }
 }
